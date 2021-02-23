@@ -145,10 +145,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\IndexBuffer.h" />
+    <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\VertexBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

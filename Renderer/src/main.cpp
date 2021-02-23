@@ -1,10 +1,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Shader.h"
+
 #include <iostream>
 
 int main(void)
 {
+    
+    Shader shader()
+
     GLFWwindow* window;
 
     /* Initialize the library */
