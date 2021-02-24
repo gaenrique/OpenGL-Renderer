@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <iostream>
 #include <fstream>
 #include <istream>
 
@@ -10,6 +11,7 @@ Shader::Shader(const std::string& filepath)
 	: m_filepath(filepath)
 {
 	GenerateShaderObjects();
+	ShaderSourceCode sourceCode = ParseShaders();
 }
 
 Shader::~Shader()
@@ -27,12 +29,19 @@ void Shader::GenerateShaderObjects()
 // This functions is used to parse the shader file and return a struct containing the two
 // separate source code strings. This has to be done this way as both the vertex and fragment
 // shader are stored in the same file. They can be differentiated by '#vertex shader' and '#fragment shader'
-Shader::ShaderFragmentSource Shader::ParseShaders()
+Shader::ShaderSourceCode Shader::ParseShaders()
 {
 	std::ifstream stream;
 
 	// Opening file as an stream to read from
 	stream.open(m_filepath, std::ios_base::in);
+
+	if (!stream.is_open())
+	{
+		std::cout << "File '" << m_filepath << "' failed to open" << std::endl;
+		stream.close();
+		return { nullptr, nullptr };
+	}
 
 	// This enum is used to index into the array containing the two source code strings
 	enum ShaderType
@@ -50,13 +59,13 @@ Shader::ShaderFragmentSource Shader::ParseShaders()
 
 	while (std::getline(stream, currentLine))
 	{
-		if (currentLine.find("#"))
+		if (currentLine.find("#") != std::string::npos)
 		{
-			if (currentLine.find("vertex"))
+			if (currentLine.find("vertex") != std::string::npos)
 			{
 				currentShader = VERTEX;
 			}
-			else if (currentLine.find("fragment"))
+			else if (currentLine.find("fragment") != std::string::npos)
 			{
 				currentShader = FRAGMENT;
 			}

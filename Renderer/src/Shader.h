@@ -5,7 +5,7 @@
 class Shader
 {
 
-	struct ShaderFragmentSource
+	struct ShaderSourceCode
 	{
 		std::string vertexSource;
 		std::string fragmentSource;
@@ -27,6 +27,6 @@ private:
 	unsigned int m_FragmentID;
 
 	void GenerateShaderObjects();
-	ShaderFragmentSource ParseShaders();
+	ShaderSourceCode ParseShaders();
 	void CompileShaders();
 };

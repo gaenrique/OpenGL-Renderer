@@ -7,8 +7,6 @@
 
 int main(void)
 {
-    
-    Shader shader()
 
     GLFWwindow* window;
 
