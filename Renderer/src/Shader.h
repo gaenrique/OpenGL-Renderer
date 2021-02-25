@@ -28,5 +28,7 @@ private:
 
 	void GenerateShaderObjects();
 	ShaderSourceCode ParseShaders();
-	void CompileShaders();
+	void CompileShaders(ShaderSourceCode shaderSourceCode);
+	void CompileShader(const std::string& source, unsigned int shader);
+	void CreateProgram();
 };

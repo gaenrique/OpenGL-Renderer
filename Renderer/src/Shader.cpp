@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include <istream>
 
@@ -12,11 +13,15 @@ Shader::Shader(const std::string& filepath)
 {
 	GenerateShaderObjects();
 	ShaderSourceCode sourceCode = ParseShaders();
+	CompileShaders(sourceCode);
+	CreateProgram();
 }
 
 Shader::~Shader()
 {
-
+	glDeleteShader(m_VertexID);
+	glDeleteShader(m_FragmentID);
+	glDeleteProgram(m_RendererID);
 }
 
 void Shader::GenerateShaderObjects()
@@ -64,36 +69,78 @@ Shader::ShaderSourceCode Shader::ParseShaders()
 			if (currentLine.find("vertex") != std::string::npos)
 			{
 				currentShader = VERTEX;
+				// continue keyword is used to skip to the next line in order to not append it
+				continue;
 			}
 			else if (currentLine.find("fragment") != std::string::npos)
 			{
 				currentShader = FRAGMENT;
+				continue;
 			}
 		}
-		else
+		if (currentShader != NONE)
 		{
-			if (currentShader != NONE)
-			{
-				currentLine.append("\n");
-				sourceCode[(int)currentShader].append(currentLine);
-			}
+			currentLine.append("\n");
+			// Enum is used to index into the source code array
+			sourceCode[(int)currentShader].append(currentLine);
 		}
 	}
+
+	sourceCode[0].append("\0");
+	sourceCode[1].append("\0");
 
 	return { sourceCode[0], sourceCode[1] };
 }
 
-void Shader::CompileShaders()
+void Shader::CompileShaders(ShaderSourceCode shaderSourceCode)
 {
+	CompileShader(shaderSourceCode.vertexSource, m_VertexID);
+	CompileShader(shaderSourceCode.fragmentSource, m_FragmentID);
+}
 
+void Shader::CompileShader(const std::string& source, unsigned int shader)
+{
+	// Get strings for glShaderSource.
+	const char* c_str = source.c_str();
+	glShaderSource(shader, 1, &c_str, NULL);
+
+	glCompileShader(shader);
+
+	GLint isCompiled = 0;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+	if (isCompiled == GL_FALSE)
+	{
+		GLint maxLength = 0;
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+		// The maxLength includes the NULL character
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+
+		// Provide the infolog in whatever manor you deem best.
+		std::cout << "Error while compiling shader: " << errorLog[0] << std::endl;
+		// Exit with failure.
+		glDeleteShader(shader); // Don't leak the shader.
+		return;
+	}
+	std::cout << "Shader has compiled successfully" << std::endl;
+
+	// Shader compilation is successful.
+}
+
+void Shader::CreateProgram()
+{
+	m_RendererID = glCreateProgram();
+	glAttachShader(m_VertexID, GL_VERTEX_SHADER);
+	glAttachShader(m_FragmentID, GL_FRAGMENT_SHADER);
 }
 
 void Shader::Bind() const
 {
-
+	glUseProgram(m_RendererID);
 }
 
 void Shader::Unbind() const
 {
-
+	glUseProgram(0);
 }

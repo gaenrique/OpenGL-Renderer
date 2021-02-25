@@ -32,6 +32,9 @@ int main(void)
         std::cout << "Glew failed to initialise :(" << std::endl;
     }
 
+    std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.txt";
+    Shader shader(filepath);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
