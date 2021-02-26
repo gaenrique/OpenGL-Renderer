@@ -71,8 +71,6 @@ int main(void)
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
     vb.Unbind();
 
-
-
     std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);
 
