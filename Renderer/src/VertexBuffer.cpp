@@ -3,15 +3,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-VertexBuffer::VertexBuffer()
-{
-	glGenBuffers(1, &m_RendererID);
-}
 
-VertexBuffer::VertexBuffer(const void* data, unsigned int count)
+VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {
 	glGenBuffers(1, &m_RendererID);
-	InsertData(data, count);
+	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
 VertexBuffer::~VertexBuffer()
@@ -27,10 +24,4 @@ void VertexBuffer::Bind() const
 void VertexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void VertexBuffer::InsertData(const void* data, unsigned int count)
-{
-	Bind();
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * count, data, GL_STATIC_DRAW);
 }

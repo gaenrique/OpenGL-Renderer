@@ -40,6 +40,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Shaders\default.txt" />
+    <Text Include="Shaders\default.glsl" />
   </ItemGroup>
 </Project>

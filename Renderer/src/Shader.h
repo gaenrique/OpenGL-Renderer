@@ -19,6 +19,8 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
+	inline unsigned int GetProgramID() { return m_RendererID; }
+
 private:
 	const std::string m_filepath;
 

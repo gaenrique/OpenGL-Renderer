@@ -19,8 +19,6 @@ Shader::Shader(const std::string& filepath)
 
 Shader::~Shader()
 {
-	glDeleteShader(m_VertexID);
-	glDeleteShader(m_FragmentID);
 	glDeleteProgram(m_RendererID);
 }
 
@@ -131,8 +129,16 @@ void Shader::CompileShader(const std::string& source, unsigned int shader)
 void Shader::CreateProgram()
 {
 	m_RendererID = glCreateProgram();
-	glAttachShader(m_VertexID, GL_VERTEX_SHADER);
-	glAttachShader(m_FragmentID, GL_FRAGMENT_SHADER);
+	glAttachShader(m_RendererID, m_VertexID);
+	glAttachShader(m_RendererID, m_FragmentID);
+	glLinkProgram(m_RendererID);
+	int success;
+	glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success);
+	if (success)
+	{
+		std::cout << "Linking was successful!" << std::endl;
+
+	}
 }
 
 void Shader::Bind() const
