@@ -28,24 +28,26 @@ void VertexArray::Unbind() const
 	glBindVertexArray(0);
 }
 
-void VertexArray::AddVertexBuffer(VertexBuffer& vertexBuffer)
+void VertexArray::AddVertexBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout)
 {
 	Bind();
 	vertexBuffer.Bind();
-	m_VertexBuffer = &vertexBuffer;
+	m_VertexBuffer = std::make_unique<VertexBuffer>(vertexBuffer);
+	const auto& layoutElements = layout.GetElements();
+	int offset = 0;
+	for (int i = 0; i < layoutElements.size(); i++)
+	{
+		LayoutElements currentLayout = layoutElements[i];
+		glEnableVertexAttribArray(i);
+		glVertexAttribPointer(i, currentLayout.count, currentLayout.type, currentLayout.normalized,
+			layout.GetStride(), (void*)offset);
+		offset += currentLayout.count * currentLayout.GetSizeOfType(currentLayout.type);
+	}
 }
 
-void VertexArray::AddIndexBuffer(IndexBuffer& indexBuffer)
+void VertexArray::AddIndexBuffer(const IndexBuffer& indexBuffer, const VertexBufferLayout& layout)
 {
 	Bind();
 	indexBuffer.Bind();
-	m_IndexBuffer = &indexBuffer;
-}
-
-void VertexArray::AddLayout(Layout& layout)
-{
-	Bind();
-	m_VertexBuffer->Bind();
-	glEnableVertexAttribArray(layout.index);
-	glVertexAttribPointer(layout.index, layout.size, layout.type, layout.normalized, layout.stride, layout.pointer);
+	m_IndexBuffer = std::make_unique<IndexBuffer>(indexBuffer);
 }

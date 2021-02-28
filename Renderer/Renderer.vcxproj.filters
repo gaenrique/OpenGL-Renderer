@@ -48,4 +48,7 @@
   <ItemGroup>
     <Text Include="Shaders\default.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\VertexBufferLayout.h" />
+  </ItemGroup>
 </Project>

@@ -5,17 +5,11 @@
 
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
-#include <vector>
+#include "VertexBufferLayout.h"
 
-struct Layout
-{
-	unsigned int index;
-	int size;
-	GLenum type;
-	GLboolean normalized;
-	GLsizei stride;
-	const void* pointer;
-};
+#include <vector>
+#include <memory>
+
 
 class VertexArray
 {
@@ -26,13 +20,11 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
-	void AddVertexBuffer(VertexBuffer& vertexBuffer);
-	void AddIndexBuffer(IndexBuffer& indexBuffer);
-
-	void AddLayout(Layout& layout);
+	void AddVertexBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout);
+	void AddIndexBuffer(const IndexBuffer& indexBuffer, const VertexBufferLayout& layout);
 
 private:
 	unsigned int m_RendererID;
-	VertexBuffer* m_VertexBuffer;
-	IndexBuffer* m_IndexBuffer;
+	std::unique_ptr<VertexBuffer> m_VertexBuffer;
+	std::unique_ptr<IndexBuffer> m_IndexBuffer;
 };

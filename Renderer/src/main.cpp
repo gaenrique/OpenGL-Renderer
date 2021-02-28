@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "VertexBuffer.h"
 #include "VertexArray.h"
+#include "VertexBufferLayout.h"
 
 #include <iostream>
 
@@ -62,14 +63,13 @@ int main(void)
          0.0f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f
     };
 
-    Layout vertexLayout = { 0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0 };
-    Layout colorLayout = { 1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)) };
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+    layout.Push<float>(3);
 
     VertexArray VAO;
     VertexBuffer vb(vertices, sizeof(vertices));
-    VAO.AddVertexBuffer(vb);
-    VAO.AddLayout(vertexLayout);
-    VAO.AddLayout(colorLayout);
+    VAO.AddVertexBuffer(vb, layout);
 
     std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);
