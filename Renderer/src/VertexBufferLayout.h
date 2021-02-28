@@ -4,11 +4,13 @@
 
 #include <GL/glew.h>
 
+// This LayoutElements struct contains elements needed for the creating of a VertexAttribPointer
 struct LayoutElements {
 	unsigned int type;
 	unsigned int count;
 	bool normalized;
 
+	// Static function used to get the size of a GL type
 	static unsigned int GetSizeOfType(unsigned int type)
 	{
 		switch (type)
@@ -26,6 +28,9 @@ public:
 	VertexBufferLayout()
 		: m_Stride(0) { }
 
+	// This template is used to push attributes into the vector.
+	// Template is used as there can be different data types
+	// depending on the buffer
 	template<typename T>
 	void Push(unsigned int count) { }
 
@@ -33,6 +38,8 @@ public:
 	void Push<float>(unsigned int count)
 	{
 		m_Elements.push_back({ GL_FLOAT, count, false });
+		// Each time a new attribute is pushed, the stride is
+		// increased by the size of the data type multiplied by the count
 		m_Stride += sizeof(float) * count;
 	}
 
@@ -56,6 +63,10 @@ public:
 
 private:
 	
+	// All layouts are pushed into this vector. They are initialised in a loop
+	// in the VertexArray class
 	std::vector<LayoutElements> m_Elements;
+
+	// Keeps track of the current stride for the buffer
 	unsigned int m_Stride;
 };
