@@ -33,4 +33,6 @@ private:
 	void CompileShaders(ShaderSourceCode shaderSourceCode);
 	void CompileShader(const std::string& source, unsigned int shader);
 	void CreateProgram();
+
+	std::string GetShaderName();
 };

@@ -13,6 +13,12 @@ Shader::Shader(const std::string& filepath)
 {
 	GenerateShaderObjects();
 	ShaderSourceCode sourceCode = ParseShaders();
+	// If the source code file fails to open
+	if (sourceCode.vertexSource.empty())
+	{
+		std::cout << filepath << " failed to open" << std::endl;
+		return;
+	}
 	CompileShaders(sourceCode);
 	CreateProgram();
 }

@@ -4,6 +4,7 @@
 
 #include "Shader.h"
 #include "VertexBuffer.h"
+#include "VertexArray.h"
 
 #include <iostream>
 
@@ -15,7 +16,8 @@ static void GLClearError()
 
 static void GLCheckError()
 {
-    while (GLenum error = glGetError())
+    GLenum error;
+    while ((error = glGetError()) != GL_NO_ERROR)
     {
         std::cout << "[OpenGL Error] (" << error << ")" << std::endl;
     }
@@ -43,6 +45,8 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    glewExperimental = GL_TRUE;
+
     GLenum err = glewInit();
     if (err != GLEW_OK)
     {
@@ -58,35 +62,27 @@ int main(void)
          0.0f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f
     };
 
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    Layout vertexLayout = { 0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0 };
+    Layout colorLayout = { 1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)) };
 
+    VertexArray VAO;
     VertexBuffer vb(vertices, sizeof(vertices));
-
-    vb.Bind();
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
-    vb.Unbind();
+    VAO.AddVertexBuffer(vb);
+    VAO.AddLayout(vertexLayout);
+    VAO.AddLayout(colorLayout);
 
     std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);
-
-
-    glBindVertexArray(0);
-    shader.Unbind();
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
 
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         shader.Bind();
-        glBindVertexArray(VAO);
+        VAO.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         /* Swap front and back buffers */
