@@ -6,6 +6,7 @@
 #include "VertexBuffer.h"
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
+#include "Renderer.h"
 
 #include <iostream>
 
@@ -63,13 +64,19 @@ int main(void)
          0.0f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f
     };
 
+    unsigned int indices[] = {
+        0, 1, 2
+    };
+
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(3);
 
     VertexArray VAO;
     VertexBuffer vb(vertices, sizeof(vertices));
+    IndexBuffer ib(indices, sizeof(indices));
     VAO.AddVertexBuffer(vb, layout);
+    VAO.AddIndexBuffer(ib);
 
     std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);
@@ -78,12 +85,7 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
 
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        shader.Bind();
-        VAO.Bind();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        Renderer::Get().Draw(VAO, shader);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

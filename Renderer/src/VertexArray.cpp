@@ -50,7 +50,7 @@ void VertexArray::AddVertexBuffer(const VertexBuffer& vertexBuffer, const Vertex
 	}
 }
 
-void VertexArray::AddIndexBuffer(const IndexBuffer& indexBuffer, const VertexBufferLayout& layout)
+void VertexArray::AddIndexBuffer(const IndexBuffer& indexBuffer)
 {
 	Bind();
 	indexBuffer.Bind();

@@ -21,7 +21,9 @@ public:
 	void Unbind() const;
 
 	void AddVertexBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout);
-	void AddIndexBuffer(const IndexBuffer& indexBuffer, const VertexBufferLayout& layout);
+	void AddIndexBuffer(const IndexBuffer& indexBuffer);
+
+	inline unsigned int GetNumberOfVertices() const { return m_IndexBuffer->GetNumberOfVertices(); }
 
 private:
 	unsigned int m_RendererID;
