@@ -7,6 +7,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Renderer.h"
+#include "Logger/Logger.h"
 
 #include <iostream>
 
@@ -59,15 +60,21 @@ int main(void)
     std::cout << glGetString(GL_VERSION) << std::endl;
 
     float vertices[] = {
-         -0.9f, -0.9f, 0.0f, 1.0f, 0.0f, 0.0f,
-         0.9f, -0.9f, 0.0f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f
+         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+         -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+         0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+
     };
 
     unsigned int indices[] = {
-        0, 1, 2
+        0, 1, 2, 1, 3, 2
     };
 
+    Logger::Info("Test 1");
+    Logger::Warn("Test 2");
+    Logger::Critical("Test 3");
+     
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(3);
