@@ -146,7 +146,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\IndexBuffer.cpp" />
-    <ClCompile Include="src\Logger\Logger.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />

@@ -8,6 +8,8 @@
 #include <fstream>
 #include <istream>
 
+#include "Logger/Logger.h"
+
 Shader::Shader(const std::string& filepath)
 	: m_filepath(filepath)
 {
@@ -16,7 +18,7 @@ Shader::Shader(const std::string& filepath)
 	// If the source code file fails to open
 	if (sourceCode.vertexSource.empty())
 	{
-		std::cout << filepath << " failed to open" << std::endl;
+		Logger::Critical("File at {} failed to open", filepath);
 		return;
 	}
 	CompileShaders(sourceCode);
@@ -47,7 +49,6 @@ Shader::ShaderSourceCode Shader::ParseShaders()
 
 	if (!stream.is_open())
 	{
-		std::cout << "File '" << m_filepath << "' failed to open" << std::endl;
 		stream.close();
 		return { nullptr, nullptr };
 	}
@@ -122,12 +123,12 @@ void Shader::CompileShader(const std::string& source, unsigned int shader)
 		glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
 
 		// Provide the infolog in whatever manor you deem best.
-		std::cout << "Error while compiling shader: " << errorLog[0] << std::endl;
+		Logger::Critical("Error while compiling shader: {}", errorLog[0]);
 		// Exit with failure.
 		glDeleteShader(shader); // Don't leak the shader.
 		return;
 	}
-	std::cout << "Shader has compiled successfully" << std::endl;
+	Logger::Info("Shader has compiled successfully!");
 
 	// Shader compilation is successful.
 }
@@ -142,8 +143,7 @@ void Shader::CreateProgram()
 	glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success);
 	if (success)
 	{
-		std::cout << "Linking was successful!" << std::endl;
-
+		Logger::Info("Shader Linking was successful!");
 	}
 }
 

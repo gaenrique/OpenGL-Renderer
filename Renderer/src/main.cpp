@@ -57,7 +57,7 @@ int main(void)
         std::cout << "Glew failed to initialise :(" << std::endl;
     }
 
-    std::cout << glGetString(GL_VERSION) << std::endl;
+    Logger::Info("OpenGL Version: {}", glGetString(GL_VERSION));
 
     float vertices[] = {
          -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -71,10 +71,10 @@ int main(void)
         0, 1, 2, 1, 3, 2
     };
 
-    Logger::Info("Test 1");
-    Logger::Warn("Test 2");
-    Logger::Critical("Test 3");
-     
+    Logger::Info("Hello there {} {}", 5, 10);
+    Logger::Warn("Testing {} {} {}", "testing", 5.5f, -5);
+    Logger::Critical("Hello Word");
+
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(3);
