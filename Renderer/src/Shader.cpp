@@ -123,7 +123,7 @@ void Shader::CompileShader(const std::string& source, unsigned int shader)
 		glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
 
 		// Provide the infolog in whatever manor you deem best.
-		Logger::Critical("Error while compiling shader: {}", errorLog[0]);
+		Logger::Critical("Error while compiling shader: {}", (char*)&errorLog[0]);
 		// Exit with failure.
 		glDeleteShader(shader); // Don't leak the shader.
 		return;

@@ -2,7 +2,6 @@
 
 #include <string>
 #include <Windows.h>
-#include <tuple>
 
 #include <iostream>
 

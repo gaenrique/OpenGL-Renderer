@@ -8,6 +8,7 @@
 #include "VertexBufferLayout.h"
 #include "Renderer.h"
 #include "Logger/Logger.h"
+#include "Texture.h"
 
 #include <iostream>
 
@@ -60,10 +61,11 @@ int main(void)
     Logger::Info("OpenGL Version: {}", glGetString(GL_VERSION));
 
     float vertices[] = {
-         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-         0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-         -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-         0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+         // positions         // colors           // texture coords
+         -0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,
+         -0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+         0.5f, 0.5f, 0.0f,    0.0f, 0.0f, 1.0f,   1.0f, 1.0f
 
     };
 
@@ -71,19 +73,17 @@ int main(void)
         0, 1, 2, 1, 3, 2
     };
 
-    Logger::Info("Hello there {} {}", 5, 10);
-    Logger::Warn("Testing {} {} {}", "testing", 5.5f, -5);
-    Logger::Critical("Hello Word");
-
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(3);
+    layout.Push<float>(2);
 
     VertexArray VAO;
     VertexBuffer vb(vertices, sizeof(vertices));
     IndexBuffer ib(indices, sizeof(indices));
     VAO.AddVertexBuffer(vb, layout);
     VAO.AddIndexBuffer(ib);
+    Texture texture("C:/dev/C++/Renderer/Renderer/Textures/grass.jpg");
 
     std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);
@@ -92,7 +92,7 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
 
-        Renderer::Get().Draw(VAO, shader);
+        Renderer::Get().Draw(VAO, shader, texture);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

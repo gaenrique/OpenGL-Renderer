@@ -2,6 +2,7 @@
 
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 
 // Singleton Renderer class used to render the VAO and Shader
 class Renderer
@@ -16,6 +17,8 @@ public:
 	}
 
 	void Draw(const VertexArray& va, const Shader& shader) const;
+
+	void Draw(const VertexArray& va, const Shader& shader, const Texture& texture) const;
 
 private:
 	Renderer() {}
