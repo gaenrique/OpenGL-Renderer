@@ -65,12 +65,16 @@
     <ClInclude Include="src\vendor\stb_image\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\assets\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Shaders\default.glsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\VertexBufferLayout.h" />
+    <None Include="src\assets\Cube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\grass.jpg">

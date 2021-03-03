@@ -155,6 +155,7 @@
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\assets\Cube.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Logger\Logger.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -168,6 +169,7 @@
     <Text Include="Shaders\default.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\assets\Cube.cpp" />
     <None Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>

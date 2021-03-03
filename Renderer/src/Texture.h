@@ -2,7 +2,7 @@
 
 #include <string>
 
-// Supported image formates (for now...)
+// Supported image formats (for now...)
 enum ImageFormat
 {
 	JPEG,
