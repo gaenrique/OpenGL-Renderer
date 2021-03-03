@@ -2,10 +2,17 @@
 
 #include <string>
 
+// Supported image formates (for now...)
+enum ImageFormat
+{
+	JPEG,
+	PNG
+};
+
 class Texture
 {
 public:
-	Texture(const std::string& filepath);
+	Texture(const std::string& filepath, ImageFormat imageFormat);
 	~Texture();
 
 	void Bind() const;
@@ -16,7 +23,7 @@ public:
 
 private:
 
-	void LoadTextureData(const std::string& filepath);
+	void LoadTextureData(const std::string& filepath, ImageFormat imageFormat);
 
 	unsigned int m_RendererID;
 	unsigned char* m_RawTextureData;

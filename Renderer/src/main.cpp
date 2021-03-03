@@ -83,7 +83,7 @@ int main(void)
     IndexBuffer ib(indices, sizeof(indices));
     VAO.AddVertexBuffer(vb, layout);
     VAO.AddIndexBuffer(ib);
-    Texture texture("C:/dev/C++/Renderer/Renderer/Textures/grass.jpg");
+    Texture texture("C:/dev/C++/Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
 
     std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);

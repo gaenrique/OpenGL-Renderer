@@ -21,6 +21,11 @@ public:
 
 	inline unsigned int GetProgramID() { return m_RendererID; }
 
+	void SetUniform1f(std::string uniformName, float f1);
+	void SetUniform2f(std::string uniformName, float f1, float f2);
+	void SetUniform3f(std::string uniformName, float f1, float f2, float f3);
+	void SetUniform4f(std::string uniformName, float f1, float f2, float f3, float f4);
+
 private:
 	const std::string m_filepath;
 

@@ -147,6 +147,30 @@ void Shader::CreateProgram()
 	}
 }
 
+void Shader::SetUniform1f(std::string uniformName, float f1)
+{
+	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
+	glUniform1f(uniformLocation, f1);
+}
+
+void Shader::SetUniform2f(std::string uniformName, float f1, float f2)
+{
+	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
+	glUniform2f(uniformLocation, f1, f2);
+}
+
+void Shader::SetUniform3f(std::string uniformName, float f1, float f2, float f3)
+{
+	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
+	glUniform3f(uniformLocation, f1, f2, f3);
+}
+
+void Shader::SetUniform4f(std::string uniformName, float f1, float f2, float f3, float f4)
+{
+	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
+	glUniform4f(uniformLocation, f1, f2, f3, f4);
+}
+
 void Shader::Bind() const
 {
 	glUseProgram(m_RendererID);

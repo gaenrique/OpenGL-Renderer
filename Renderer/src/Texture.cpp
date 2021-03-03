@@ -6,9 +6,9 @@
 
 #include "Logger/Logger.h"
 
-Texture::Texture(const std::string& filepath)
+Texture::Texture(const std::string& filepath, ImageFormat imageFormat)
 {
-	LoadTextureData(filepath);
+	LoadTextureData(filepath, imageFormat);
 	if (!m_RawTextureData)
 	{
 		Logger::Warn("Texture {} failed to allocate");
@@ -29,9 +29,11 @@ Texture::Texture(const std::string& filepath)
 	stbi_image_free(m_RawTextureData);
 }
 
-void Texture::LoadTextureData(const std::string& filepath)
+void Texture::LoadTextureData(const std::string& filepath, ImageFormat imageFormat)
 {
 	m_RawTextureData = stbi_load(filepath.c_str(), &m_Width, &m_Height, &m_NrChannels, 0);
+	if (imageFormat == PNG)
+		stbi__vertical_flip(m_RawTextureData, m_Width, m_Height, m_NrChannels);
 }
 
 Texture::~Texture()
