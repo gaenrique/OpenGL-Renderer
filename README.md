@@ -7,6 +7,7 @@ A simple renderer made with OpenGL and C++. Using this repository as a starting 
 - GLFW (window management and mouse and keyboard IO)
 - GLEW (modern OpenGL extensions)
 - stb_image (used to load textures)
+- glm (math library for matrix and vector logic)
 
 ## Features
 
