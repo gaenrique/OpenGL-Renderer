@@ -39,6 +39,9 @@
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\assets\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\VertexBuffer.h">
@@ -74,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\VertexBufferLayout.h" />
-    <None Include="src\assets\Cube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\grass.jpg">

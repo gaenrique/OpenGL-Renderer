@@ -13,6 +13,7 @@
 #include "Renderer.h"
 #include "Logger/Logger.h"
 #include "Texture.h"
+#include "assets/Cube.h"
 
 #include <iostream>
 
@@ -116,25 +117,20 @@ int main(void)
         20, 21, 22, 23, 24, 25, 26, 27, 28,
         29, 30, 31, 32, 33, 34, 35
     };
+        
 
-    glm::vec3 cubePositions[] = {
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(2.0f, 5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f, 3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f, 2.0f, -2.5f),
-        glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f)
+    Cube cubes[] = {
+        { glm::vec3(0.0f, 0.0f, 0.0f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(2.0f, 5.0f, -15.0f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(-1.5f, -2.2f, -2.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(-3.8f, -2.0f, -12.3f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(2.4f, -0.4f, -3.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(-1.7f, 3.0f, -7.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(1.3f, -2.0f, -2.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(1.5f, 2.0f, -2.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(1.5f, 0.2f, -1.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
+        { glm::vec3(-1.3f, 1.0f, -1.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) }
     };
-
-    // create transformations
-    glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
     VertexBufferLayout layout;
     layout.Push<float>(3);
@@ -156,16 +152,10 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         VAO.Bind();
-        // pass transformation matrices to the shader
-        shader.SetUniformMatrix4f("view", 1, view);
-        shader.SetUniformMatrix4f("projection", 1, projection);
         for (int i = 0; i < 10; i++)
         {
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            shader.SetUniformMatrix4f("model", 1, model);
+            Cube cube = cubes[i];
+            shader.SetUniformMatrix4f("mvp", 1, cube.GetMVPMatrix());
             Renderer::Get().Draw(VAO, shader, texture);
         }
 

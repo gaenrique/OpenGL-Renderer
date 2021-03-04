@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\assets\Cube.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -169,7 +170,6 @@
     <Text Include="Shaders\default.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\assets\Cube.cpp" />
     <None Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
