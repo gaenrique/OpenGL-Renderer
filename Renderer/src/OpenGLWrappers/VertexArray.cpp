@@ -6,7 +6,6 @@
 #include <iostream>
 
 VertexArray::VertexArray()
-	: m_VertexBuffer(nullptr), m_IndexBuffer(nullptr)
 {
 	glGenVertexArrays(1, &m_RendererID);
 	Bind();
@@ -14,6 +13,8 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+	glDeleteBuffers(GL_ARRAY_BUFFER, &m_VertexBufferID);
+	glDeleteBuffers(GL_ELEMENT_ARRAY_BUFFER, &m_IndexBufferID);
 	glDeleteVertexArrays(1, &m_RendererID);
 }
 
@@ -27,12 +28,12 @@ void VertexArray::Unbind() const
 	glBindVertexArray(0);
 }
 
-void VertexArray::AddVertexBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout)
+void VertexArray::AddVertexBuffer(VertexBuffer& vertexBuffer, const VertexBufferLayout& layout)
 {
 	Bind();
 	vertexBuffer.Bind();
 	// A pointer is kept for the Vertex Buffer
-	m_VertexBuffer = std::make_unique<VertexBuffer>(vertexBuffer);
+	m_VertexBufferID = vertexBuffer.GetID();
 	const auto& layoutElements = layout.GetElements();
 	int offset = 0;
 	for (int i = 0; i < layoutElements.size(); i++)
@@ -50,9 +51,9 @@ void VertexArray::AddVertexBuffer(const VertexBuffer& vertexBuffer, const Vertex
 	}
 }
 
-void VertexArray::AddIndexBuffer(const IndexBuffer& indexBuffer)
+void VertexArray::AddIndexBuffer(IndexBuffer& indexBuffer)
 {
 	Bind();
 	indexBuffer.Bind();
-	m_IndexBuffer = std::make_unique<IndexBuffer>(indexBuffer);
+	m_IndexBufferID = indexBuffer.GetID();
 }

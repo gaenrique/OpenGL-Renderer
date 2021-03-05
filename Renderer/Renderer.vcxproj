@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\assets\Cube.cpp" />
+    <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\OpenGLWrappers\IndexBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\assets\Cube.h" />
+    <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\OpenGLWrappers\IndexBuffer.h" />
     <ClInclude Include="src\Logger\Logger.h" />
     <ClInclude Include="src\Renderer.h" />

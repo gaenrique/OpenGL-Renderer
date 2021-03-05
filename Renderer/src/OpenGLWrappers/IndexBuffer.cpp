@@ -10,10 +10,6 @@ IndexBuffer::IndexBuffer(const void* data, unsigned int size)
 	InsertData(data, size);
 }
 
-IndexBuffer::~IndexBuffer()
-{
-	glDeleteBuffers(1, &m_RendererID);
-}
 
 void IndexBuffer::Bind() const
 {

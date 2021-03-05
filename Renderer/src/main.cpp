@@ -14,6 +14,7 @@
 #include "Logger/Logger.h"
 #include "OpenGLWrappers/Texture.h"
 #include "assets/Cube.h"
+#include "Model.h"
 
 #include <iostream>
 
@@ -136,27 +137,37 @@ int main(void)
     layout.Push<float>(3);
     layout.Push<float>(2);
 
-    VertexArray VAO;
-    VertexBuffer vb(vertices, sizeof(vertices));
-    VAO.AddVertexBuffer(vb, layout);
-    IndexBuffer ib(indices, sizeof(indices));
-    VAO.AddIndexBuffer(ib);
-    Texture texture("C:/dev/C++/OpenGL-Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
+    Model model(vertices, sizeof(vertices), layout, indices, sizeof(indices));
 
-    std::string filepath = "C:/dev/C++/OpenGL-Renderer/Renderer/Shaders/default.glsl";
-    Shader shader(filepath);
+    model.AddInstance(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(1.0f, 1.0f, 1.0f), 45.0f, glm::vec3(1.0f, 0.5f, 0.5f));
+    model.AddShader("C:/dev/C++/OpenGL-Renderer/Renderer/Shaders/default.glsl");
+    model.AddTexture("C:/dev/C++/OpenGL-Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
 
     /* Loop until the user closes the window */
+
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        VAO.Bind();
-        for (int i = 0; i < 10; i++)
+        auto va = model.GetVAOP();
+        va->Bind();   
+        model.GetShaderP()->Bind();
+        glm::mat4 projection = glm::mat4(1.0f);
+        projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
+        model.GetShaderP()->SetUniformMatrix4f("projection", 1, projection);
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        model.GetShaderP()->SetUniformMatrix4f("view", 1, view);
+
+        auto instance = model.GetAttributes();
+        for (std::pair<int, ModelAttributes> element : instance)
         {
-            Cube cube = cubes[i];
-            shader.SetUniformMatrix4f("mvp", 1, cube.GetMVPMatrix());
-            Renderer::Get().Draw(VAO, shader, texture);
+            ModelAttributes attributes = element.second;
+            glm::mat4 modelM = glm::mat4(1.0f);
+            modelM = glm::translate(modelM, attributes.position);
+            modelM = glm::rotate(modelM, glm::radians(attributes.rotation), attributes.rotationCoordinates);
+            model.GetShaderP()->SetUniformMatrix4f("model", 1, modelM);
+            Renderer::Get().Draw(model);
         }
 
         /* Swap front and back buffers */

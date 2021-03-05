@@ -20,13 +20,11 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
-	void AddVertexBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout);
-	void AddIndexBuffer(const IndexBuffer& indexBuffer);
-
-	inline unsigned int GetNumberOfVertices() const { return m_IndexBuffer->GetNumberOfVertices(); }
+	void AddVertexBuffer(VertexBuffer& vertexBuffer, const VertexBufferLayout& layout);
+	void AddIndexBuffer(IndexBuffer& indexBuffer);
 
 private:
 	unsigned int m_RendererID;
-	std::unique_ptr<VertexBuffer> m_VertexBuffer;
-	std::unique_ptr<IndexBuffer> m_IndexBuffer;
+	unsigned int m_VertexBufferID;
+	unsigned int m_IndexBufferID;
 };

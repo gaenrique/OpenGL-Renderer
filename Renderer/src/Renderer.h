@@ -3,6 +3,7 @@
 #include "OpenGLWrappers/VertexArray.h"
 #include "OpenGLWrappers/Shader.h"
 #include "OpenGLWrappers/Texture.h"
+#include "Model.h"
 
 // Singleton Renderer class used to render the VAO and Shader
 class Renderer
@@ -16,9 +17,7 @@ public:
 		return s_Instace;
 	}
 
-	void Draw(const VertexArray& va, const Shader& shader) const;
-
-	void Draw(const VertexArray& va, const Shader& shader, const Texture& texture) const;
+	void Draw(const Model& model) const;
 
 private:
 	Renderer() {}

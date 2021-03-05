@@ -4,17 +4,10 @@
 
 Renderer Renderer::s_Instace;
 
-void Renderer::Draw(const VertexArray& va, const Shader& shader) const
+void Renderer::Draw(const Model& model) const
 {
-	va.Bind();
-	shader.Bind();
-	glDrawElements(GL_TRIANGLES, va.GetNumberOfVertices(), GL_UNSIGNED_INT, 0);
-}
-
-void Renderer::Draw(const VertexArray& va, const Shader& shader, const Texture& texture) const
-{
-	texture.Bind();
-	va.Bind();
-	shader.Bind();
-	glDrawElements(GL_TRIANGLES, va.GetNumberOfVertices(), GL_UNSIGNED_INT, 0);
+	model.GetVAOP()->Bind();
+	model.GetShaderP()->Bind();
+	//model.GetTextureP()->Bind();
+	glDrawElements(GL_TRIANGLES, model.GetNumberOfVertices(), GL_UNSIGNED_INT, 0);
 }
