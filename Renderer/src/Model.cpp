@@ -2,6 +2,9 @@
 
 #include "OpenGLWrappers/VertexBuffer.h"
 #include "OpenGLWrappers/IndexBuffer.h"
+#include "Renderer.h"
+
+#include "glm/gtc/matrix_transform.hpp"
 
 Model::Model(const void* data, int dataSize, VertexBufferLayout& layout, const void* indices, int indicesSize)
 	: m_NumberOfVertices(dataSize / sizeof(unsigned int))
@@ -13,6 +16,23 @@ Model::Model(const void* data, int dataSize, VertexBufferLayout& layout, const v
 Model::~Model()
 {
 
+}
+
+void Model::Draw(glm::mat4 projectionMatrix, glm::mat4 viewMatrix) const
+{
+	m_Shader->Bind();
+	m_Shader->SetUniformMatrix4f("projection", 1, projectionMatrix);
+	m_Shader->SetUniformMatrix4f("view", 1, viewMatrix);
+	for (std::pair<int, ModelAttributes> instance : m_Instances)
+	{
+		ModelAttributes attributes = instance.second;
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::scale(model, attributes.scale);
+		model = glm::translate(model, attributes.position);
+		model = glm::rotate(model, glm::radians(attributes.rotation), attributes.rotationCoordinates);
+		m_Shader->SetUniformMatrix4f("model", 1, model);
+		Renderer::Get().Draw(*this);
+	}
 }
 
 int Model::AddInstance(glm::vec3 position, glm::vec3 scale, float rotation, glm::vec3 rotationCoordinates)

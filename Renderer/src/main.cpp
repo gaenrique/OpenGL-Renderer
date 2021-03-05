@@ -15,6 +15,7 @@
 #include "OpenGLWrappers/Texture.h"
 #include "assets/Cube.h"
 #include "Model.h"
+#include "Scene.h"
 
 #include <iostream>
 
@@ -118,57 +119,26 @@ int main(void)
         20, 21, 22, 23, 24, 25, 26, 27, 28,
         29, 30, 31, 32, 33, 34, 35
     };
-        
 
-    Cube cubes[] = {
-        { glm::vec3(0.0f, 0.0f, 0.0f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(2.0f, 5.0f, -15.0f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(-1.5f, -2.2f, -2.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(-3.8f, -2.0f, -12.3f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(2.4f, -0.4f, -3.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(-1.7f, 3.0f, -7.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(1.3f, -2.0f, -2.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(1.5f, 2.0f, -2.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(1.5f, 0.2f, -1.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) },
-        { glm::vec3(-1.3f, 1.0f, -1.5f), 20.0f, glm::vec3(0.8f, 0.2f, 0.3f) }
-    };
+    Scene scene;
 
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(2);
 
     Model model(vertices, sizeof(vertices), layout, indices, sizeof(indices));
-
+    scene.AddModel(&model);
     model.AddInstance(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(1.0f, 1.0f, 1.0f), 45.0f, glm::vec3(1.0f, 0.5f, 0.5f));
     model.AddShader("C:/dev/C++/OpenGL-Renderer/Renderer/Shaders/default.glsl");
     model.AddTexture("C:/dev/C++/OpenGL-Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
 
-    /* Loop until the user closes the window */
+    /* loop until the user closes the window */
 
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        auto va = model.GetVAOP();
-        va->Bind();   
-        model.GetShaderP()->Bind();
-        glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
-        model.GetShaderP()->SetUniformMatrix4f("projection", 1, projection);
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        model.GetShaderP()->SetUniformMatrix4f("view", 1, view);
-
-        auto instance = model.GetAttributes();
-        for (std::pair<int, ModelAttributes> element : instance)
-        {
-            ModelAttributes attributes = element.second;
-            glm::mat4 modelM = glm::mat4(1.0f);
-            modelM = glm::translate(modelM, attributes.position);
-            modelM = glm::rotate(modelM, glm::radians(attributes.rotation), attributes.rotationCoordinates);
-            model.GetShaderP()->SetUniformMatrix4f("model", 1, modelM);
-            Renderer::Get().Draw(model);
-        }
+        scene.Draw();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

@@ -33,6 +33,8 @@ public:
 	inline std::shared_ptr<Shader> GetShaderP() const { return m_Shader; }
 	inline std::shared_ptr<Texture> GetTextureP() const { return m_Texture; }
 
+	void Draw(glm::mat4 projectionMatrix, glm::mat4 viewMatrix) const;
+
 	inline const std::unordered_map<int, ModelAttributes> GetAttributes() const { return m_Instances; }
 
 	inline unsigned int GetNumberOfVertices() const { return m_NumberOfVertices; }
