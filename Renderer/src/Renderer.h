@@ -1,8 +1,8 @@
 #pragma once
 
-#include "VertexArray.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "OpenGLWrappers/VertexArray.h"
+#include "OpenGLWrappers/Shader.h"
+#include "OpenGLWrappers/Texture.h"
 
 // Singleton Renderer class used to render the VAO and Shader
 class Renderer

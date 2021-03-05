@@ -10,7 +10,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Logger/Logger.h"
+#include "../Logger/Logger.h"
 
 Shader::Shader(const std::string& filepath)
 	: m_filepath(filepath)

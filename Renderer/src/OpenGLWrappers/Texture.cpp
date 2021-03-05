@@ -4,7 +4,7 @@
 #include "stb_image/stb_image.h"
 #include "GL/glew.h"
 
-#include "Logger/Logger.h"
+#include "../Logger/Logger.h"
 
 Texture::Texture(const std::string& filepath, ImageFormat imageFormat)
 {

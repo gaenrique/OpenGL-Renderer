@@ -6,13 +6,13 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include "Shader.h"
-#include "VertexBuffer.h"
-#include "VertexArray.h"
-#include "VertexBufferLayout.h"
+#include "OpenGLWrappers/Shader.h"
+#include "OpenGLWrappers/VertexBuffer.h"
+#include "OpenGLWrappers/VertexArray.h"
+#include "OpenGLWrappers/VertexBufferLayout.h"
 #include "Renderer.h"
 #include "Logger/Logger.h"
-#include "Texture.h"
+#include "OpenGLWrappers/Texture.h"
 #include "assets/Cube.h"
 
 #include <iostream>
@@ -141,9 +141,9 @@ int main(void)
     VAO.AddVertexBuffer(vb, layout);
     IndexBuffer ib(indices, sizeof(indices));
     VAO.AddIndexBuffer(ib);
-    Texture texture("C:/dev/C++/Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
+    Texture texture("C:/dev/C++/OpenGL-Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
 
-    std::string filepath = "C:/dev/C++/Renderer/Renderer/Shaders/default.glsl";
+    std::string filepath = "C:/dev/C++/OpenGL-Renderer/Renderer/Shaders/default.glsl";
     Shader shader(filepath);
 
     /* Loop until the user closes the window */
