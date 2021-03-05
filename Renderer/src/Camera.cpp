@@ -4,8 +4,7 @@
 
 Camera::Camera()
 {
-	m_ViewMatrix = glm::mat4(1.0f);
-	m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
+	InitialiseProjectionMatrix();
 }
 
 Camera::~Camera()
@@ -15,6 +14,6 @@ Camera::~Camera()
 
 void Camera::InitialiseProjectionMatrix()
 {
-	glm::mat4 m_ViewMatrix = glm::mat4(1.0f);
-	m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(0.0f, 0.0f, 3.0f));
+	m_ViewMatrix = glm::mat4(1.0f);
+	m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
 }

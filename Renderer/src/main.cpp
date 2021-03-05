@@ -129,8 +129,8 @@ int main(void)
     Model model(vertices, sizeof(vertices), layout, indices, sizeof(indices));
     scene.AddModel(&model);
     model.AddInstance(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(1.0f, 1.0f, 1.0f), 45.0f, glm::vec3(1.0f, 0.5f, 0.5f));
-    model.AddShader("C:/dev/C++/OpenGL-Renderer/Renderer/Shaders/default.glsl");
-    model.AddTexture("C:/dev/C++/OpenGL-Renderer/Renderer/Textures/grass.jpg", ImageFormat::JPEG);
+    model.AddShader("../Renderer/Shaders/default.glsl");
+    model.AddTexture("../Renderer/Textures/grass.jpg", ImageFormat::JPEG);
 
     /* loop until the user closes the window */
 
