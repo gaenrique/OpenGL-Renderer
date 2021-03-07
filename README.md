@@ -11,6 +11,7 @@ A simple renderer made with OpenGL and C++. Using this repository as a starting 
 
 ## Features
 
+- Scene & Model Classes
 - Textures
 - Logger
 - Shader Parsing and Compilation
