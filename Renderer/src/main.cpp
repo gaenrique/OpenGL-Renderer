@@ -20,20 +20,6 @@
 #include <iostream>
 
 
-static void GLClearError()
-{
-    while (glGetError() != GL_NO_ERROR);
-}
-
-static void GLCheckError()
-{
-    GLenum error;
-    while ((error = glGetError()) != GL_NO_ERROR)
-    {
-        std::cout << "[OpenGL Error] (" << error << ")" << std::endl;
-    }
-}
-
 int main(void)
 {
     GLFWwindow* window;
@@ -129,6 +115,10 @@ int main(void)
     Model model(vertices, sizeof(vertices), layout, indices, sizeof(indices));
     scene.AddModel(&model);
     model.AddInstance(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(1.0f, 1.0f, 1.0f), 45.0f, glm::vec3(1.0f, 0.5f, 0.5f));
+    model.AddInstance(glm::vec3(1.0f, 2.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), 60.0f, glm::vec3(0.8f, 0.5f, 0.5f));
+    model.AddInstance(glm::vec3(-1.0f, -2.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), 60.0f, glm::vec3(0.8f, 0.5f, 0.5f));
+    model.AddInstance(glm::vec3(-1.0f, 1.0f, -10.0f), glm::vec3(1.0f, 1.0f, 1.0f), 60.0f, glm::vec3(0.5f, 0.5f, 0.5f));
+    model.AddInstance(glm::vec3(2.0f, -5.0f, -2.0f), glm::vec3(1.0f, 1.0f, 1.0f), 60.0f, glm::vec3(0.8f, 0.5f, 0.5f));
     model.AddShader("../Renderer/Shaders/default.glsl");
     model.AddTexture("../Renderer/Textures/grass.jpg", ImageFormat::JPEG);
 

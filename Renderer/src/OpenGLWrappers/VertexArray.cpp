@@ -3,11 +3,13 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 
+#include "../ErrorHandling/ErrorHandling.h"
+
 #include <iostream>
 
 VertexArray::VertexArray()
 {
-	glGenVertexArrays(1, &m_RendererID);
+	GLCall(glGenVertexArrays(1, &m_RendererID));
 	Bind();
 }
 
@@ -20,7 +22,7 @@ VertexArray::~VertexArray()
 
 void VertexArray::Bind() const
 {
-	glBindVertexArray(m_RendererID);
+	GLCall(glBindVertexArray(m_RendererID));
 }
 
 void VertexArray::Unbind() const
@@ -39,11 +41,11 @@ void VertexArray::AddVertexBuffer(VertexBuffer& vertexBuffer, const VertexBuffer
 	for (int i = 0; i < layoutElements.size(); i++)
 	{
 		LayoutElements currentLayout = layoutElements[i];
-		glEnableVertexAttribArray(i);
+		GLCall(glEnableVertexAttribArray(i));
 		// Variables in the struct are used to set up the AttribPointer, as well as the stride
 		// kept in the VertexBufferLayout class and the offset calculated inside this function
-		glVertexAttribPointer(i, currentLayout.count, currentLayout.type, currentLayout.normalized,
-			layout.GetStride(), (void*)offset);
+		GLCall(glVertexAttribPointer(i, currentLayout.count, currentLayout.type, currentLayout.normalized,
+			   layout.GetStride(), (void*)offset));
 		// The offset increases each time a new attribute is added. The offset is incremented 
 		// by the amount of elements multiplied by the size of the data type. The size of the
 		// data type can be found using the static function in the VertexBufferLayout class

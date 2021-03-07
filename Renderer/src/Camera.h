@@ -17,5 +17,6 @@ private:
 	glm::vec3 m_CameraTarget;
 	glm::vec3 m_CameraDirection;
 	glm::vec3 m_CameraUp;
+	glm::vec3 m_CameraRight;
 	glm::mat4 m_ViewMatrix;
 };

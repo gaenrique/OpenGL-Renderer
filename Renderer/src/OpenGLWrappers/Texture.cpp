@@ -5,6 +5,7 @@
 #include "GL/glew.h"
 
 #include "../Logger/Logger.h"
+#include "../ErrorHandling/ErrorHandling.h"
 
 Texture::Texture(const std::string& filepath, ImageFormat imageFormat)
 {
@@ -14,17 +15,17 @@ Texture::Texture(const std::string& filepath, ImageFormat imageFormat)
 		Logger::Warn("Texture {} failed to allocate");
 		return;
 	}
-	glGenTextures(1, &m_RendererID);
+	GLCall(glGenTextures(1, &m_RendererID));
 	Bind();
 	// Set the texture wrapping/filtering options of the currently boudn texture object
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 	// Assign the data from jpeg to this texture
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_RawTextureData);
+	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_RawTextureData));
 	// Let OpenGL generate Mipmap
-	glGenerateMipmap(m_RendererID);
+	GLCall(glGenerateMipmap(GL_TEXTURE_2D));
 	// Data can now be freed
 	stbi_image_free(m_RawTextureData);
 }
@@ -43,10 +44,10 @@ Texture::~Texture()
 
 void Texture::Bind() const
 {
-	glBindTexture(GL_TEXTURE_2D, m_RendererID);
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 }
 
 void Texture::Unbind() const
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }

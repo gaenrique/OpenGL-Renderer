@@ -11,6 +11,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../Logger/Logger.h"
+#include "../ErrorHandling/ErrorHandling.h"
 
 Shader::Shader(const std::string& filepath)
 	: m_filepath(filepath)
@@ -109,20 +110,20 @@ void Shader::CompileShader(const std::string& source, unsigned int shader)
 {
 	// Get strings for glShaderSource.
 	const char* c_str = source.c_str();
-	glShaderSource(shader, 1, &c_str, NULL);
+	GLCall(glShaderSource(shader, 1, &c_str, NULL));
 
-	glCompileShader(shader);
+	GLCall(glCompileShader(shader));
 
 	GLint isCompiled = 0;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+	GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled));
 	if (isCompiled == GL_FALSE)
 	{
 		GLint maxLength = 0;
-		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+		GLCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength));
 
 		// The maxLength includes the NULL character
 		std::vector<GLchar> errorLog(maxLength);
-		glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+		GLCall(glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]));
 
 		// Provide the infolog in whatever manor you deem best.
 		Logger::Critical("Error while compiling shader: {}", (char*)&errorLog[0]);
@@ -138,50 +139,52 @@ void Shader::CompileShader(const std::string& source, unsigned int shader)
 void Shader::CreateProgram()
 {
 	m_RendererID = glCreateProgram();
-	glAttachShader(m_RendererID, m_VertexID);
-	glAttachShader(m_RendererID, m_FragmentID);
-	glLinkProgram(m_RendererID);
+	GLCall(glAttachShader(m_RendererID, m_VertexID));
+	GLCall(glAttachShader(m_RendererID, m_FragmentID));
+	GLCall(glLinkProgram(m_RendererID));
 	int success;
-	glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success);
+	GLCall(glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success));
 	if (success)
 	{
 		Logger::Info("Shader Linking was successful!");
 	}
+	glDeleteShader(m_VertexID);
+	glDeleteShader(m_FragmentID);
 }
 
 void Shader::SetUniform1f(const std::string& uniformName, float f1)
 {
 	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
-	glUniform1f(uniformLocation, f1);
+	GLCall(glUniform1f(uniformLocation, f1));
 }
 
 void Shader::SetUniform2f(const std::string& uniformName, float f1, float f2)
 {
 	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
-	glUniform2f(uniformLocation, f1, f2);
+	GLCall(glUniform2f(uniformLocation, f1, f2));
 }
 
 void Shader::SetUniform3f(const std::string& uniformName, float f1, float f2, float f3)
 {
 	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
-	glUniform3f(uniformLocation, f1, f2, f3);
+	GLCall(glUniform3f(uniformLocation, f1, f2, f3));
 }
 
 void Shader::SetUniform4f(const std::string& uniformName, float f1, float f2, float f3, float f4)
 {
 	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
-	glUniform4f(uniformLocation, f1, f2, f3, f4);
+	GLCall(glUniform4f(uniformLocation, f1, f2, f3, f4));
 }
 
 void Shader::SetUniformMatrix4f(const std::string& uniformName, int numberOfMatrices, const glm::mat4& matrixData)
 {
 	int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
-	glUniformMatrix4fv(uniformLocation, numberOfMatrices, GL_FALSE, glm::value_ptr(matrixData));
+	GLCall(glUniformMatrix4fv(uniformLocation, numberOfMatrices, GL_FALSE, glm::value_ptr(matrixData)));
 }
 
 void Shader::Bind() const
 {
-	glUseProgram(m_RendererID);
+	GLCall(glUseProgram(m_RendererID));
 }
 
 void Shader::Unbind() const

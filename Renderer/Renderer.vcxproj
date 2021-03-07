@@ -86,7 +86,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG_MODE;WIN32;GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Renderer/src/vendor;$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="src\assets\Cube.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\ErrorHandling\ErrorHandling.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\OpenGLWrappers\IndexBuffer.h" />
     <ClInclude Include="src\Logger\Logger.h" />
