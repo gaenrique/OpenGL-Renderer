@@ -8,15 +8,24 @@ public:
 	Camera();
 	~Camera();
 
-	inline glm::mat4 GetViewMatrix() { return m_ViewMatrix; }
+	inline const glm::vec3 GetCameraPosition() const { return m_CameraPos; }
+	inline const glm::vec3 GetCameraFront() const { return m_CameraFront; }
+	inline const glm::vec3 GetCameraUp() const { return m_CameraUp; }
+	inline const glm::mat4 GetViewMatrix() const { return m_ViewMatrix; }
+
+	void UpdateViewMatrix();
+
+	void MoveForward();
+	void MoveBackwards();
+	void MoveRight();
+	void MoveLeft();
 
 private:
-	void InitialiseProjectionMatrix();
+	void InitialiseViewMatrix();
 
+	float m_CameraSpeed;
 	glm::vec3 m_CameraPos;
-	glm::vec3 m_CameraTarget;
-	glm::vec3 m_CameraDirection;
+	glm::vec3 m_CameraFront;
 	glm::vec3 m_CameraUp;
-	glm::vec3 m_CameraRight;
 	glm::mat4 m_ViewMatrix;
 };

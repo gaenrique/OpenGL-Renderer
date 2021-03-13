@@ -145,7 +145,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\assets\Cube.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\OpenGLWrappers\IndexBuffer.cpp" />
@@ -159,9 +158,11 @@
     <ClCompile Include="src\OpenGLWrappers\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\assets\Cube.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\ErrorHandling\ErrorHandling.h" />
+    <ClInclude Include="src\EventManager\Event.h" />
+    <ClInclude Include="src\EventManager\KeyEvent.h" />
+    <ClInclude Include="src\EventManager\MouseEvent.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\OpenGLWrappers\IndexBuffer.h" />
     <ClInclude Include="src\Logger\Logger.h" />

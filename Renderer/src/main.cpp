@@ -13,7 +13,6 @@
 #include "Renderer.h"
 #include "Logger/Logger.h"
 #include "OpenGLWrappers/Texture.h"
-#include "assets/Cube.h"
 #include "Model.h"
 #include "Scene.h"
 
