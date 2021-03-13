@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -160,9 +160,6 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\ErrorHandling\ErrorHandling.h" />
-    <ClInclude Include="src\EventManager\Event.h" />
-    <ClInclude Include="src\EventManager\KeyEvent.h" />
-    <ClInclude Include="src\EventManager\MouseEvent.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\OpenGLWrappers\IndexBuffer.h" />
     <ClInclude Include="src\Logger\Logger.h" />

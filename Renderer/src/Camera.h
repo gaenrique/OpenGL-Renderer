@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include <GLFW/glfw3.h>
 
 class Camera
 {
@@ -13,15 +14,16 @@ public:
 	inline const glm::vec3 GetCameraUp() const { return m_CameraUp; }
 	inline const glm::mat4 GetViewMatrix() const { return m_ViewMatrix; }
 
-	void UpdateViewMatrix();
+	void Update(GLFWwindow* window, float deltaTime);
 
-	void MoveForward();
-	void MoveBackwards();
-	void MoveRight();
-	void MoveLeft();
+	void MoveForward(float deltaTime);
+	void MoveBackwards(float deltaTime);
+	void MoveRight(float deltaTime);
+	void MoveLeft(float deltaTime);
 
 private:
 	void InitialiseViewMatrix();
+	void UpdateViewMatrix();
 
 	float m_CameraSpeed;
 	glm::vec3 m_CameraPos;

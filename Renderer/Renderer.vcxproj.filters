@@ -86,13 +86,7 @@
     <ClInclude Include="src\ErrorHandling\ErrorHandling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\EventManager\MouseEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EventManager\KeyEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EventManager\Event.h">
+    <ClInclude Include="src\EventManager\EventManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
