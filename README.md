@@ -20,6 +20,13 @@ A simple renderer made with OpenGL and C++. Using this repository as a starting 
 - Vertex Buffer Abstraction
 - Index Buffer Abstraction
 
+## Building Application
+
+1. Clone repository
+2. Open solution file in Visual Studio
+3. Ensure you are in Debug x86 configuration
+4. Build in Visual Studio
+
 ## Credits
 
 Thanks to The Cherno and learnopengl.com. The two main sources which have helped me learn what is in this repository. :D
