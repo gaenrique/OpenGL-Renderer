@@ -16,6 +16,8 @@ public:
 
 	void Update(GLFWwindow* window, float deltaTime);
 
+	void OnCursorEvent(double xpos, double ypos);
+
 	void MoveForward(float deltaTime);
 	void MoveBackwards(float deltaTime);
 	void MoveRight(float deltaTime);
@@ -30,4 +32,10 @@ private:
 	glm::vec3 m_CameraFront;
 	glm::vec3 m_CameraUp;
 	glm::mat4 m_ViewMatrix;
+	glm::vec3 m_CameraDirection;
+
+	const float m_Sensitivity;
+	float m_Yaw;
+	float m_Pitch;
+	float m_LastX, m_LastY;
 };

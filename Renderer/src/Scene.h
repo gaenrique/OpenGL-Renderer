@@ -16,6 +16,8 @@ public:
 
 	void Draw();
 
+	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
 	void AddModel(Model* model);
 
 	inline std::vector<Model*> GetModels() { return m_Models; }

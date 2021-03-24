@@ -2,8 +2,10 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
+#include <iostream>
+
 Camera::Camera()
-	: m_CameraSpeed(5.0f), m_ViewMatrix(glm::mat4(1.0f))
+	: m_CameraSpeed(5.0f), m_ViewMatrix(glm::mat4(1.0f)), m_Sensitivity(0.1f), m_Yaw(-90.0f), m_LastX(1920/2), m_LastY(1080/2)
 {
 	InitialiseViewMatrix();
 }
@@ -13,8 +15,35 @@ Camera::~Camera()
 
 }
 
+void Camera::OnCursorEvent(double xpos, double ypos)
+{
+	float xoffset = xpos - m_LastX;
+	float yoffset = m_LastY - ypos;
+	m_LastX = xpos;
+	m_LastY = ypos;
+
+	xoffset *= m_Sensitivity;
+	yoffset *= m_Sensitivity;
+
+	m_Yaw += xoffset;
+	m_Pitch += yoffset;
+
+	if (m_Pitch > 89.0f)
+		m_Pitch = 89.0f;
+	if (m_Pitch < -89.0f)
+		m_Pitch = -89.0f;
+
+	std::cout << xoffset << ", " << yoffset << std::endl;
+}
+
+
 void Camera::Update(GLFWwindow* window, float deltaTime)
 {
+	m_CameraDirection.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	m_CameraDirection.y = sin(glm::radians(m_Pitch));
+	m_CameraDirection.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	m_CameraFront = glm::normalize(m_CameraDirection);
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		MoveForward(deltaTime);
